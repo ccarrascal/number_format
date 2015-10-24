@@ -1,12 +1,73 @@
-<project default="compile">
-    <target name="compile">
-        <mkdir dir="bin"/>
-        <javac srcdir="src" destdir="bin" />
-        <javac srcdir="test" destdir="bin">
-			<classpath>
-		        <pathelement path="lib/junit-4.12.jar"/>
-		        <pathelement path="lib/hamcrest-core-1.3.jar"/>
-		    </classpath>
-        </javac>
-    </target>
+<project default="main">
+
+<property name="src.dir" location="src" /> 
+<property name="test.dir" location="test" /> 
+<property name="build.dir" location="bin" /> 
+<property name="build.test.dir" location="bin/tests" /> 
+<property name="test.report.dir" location="report" /> 
+
+<!-- Define the classpath which includes the junit.jar and the classes after compiling--> 
+<path id="junit.class.path"> 
+	<pathelement location="lib/junit-4.12.jar" /> 
+	<pathelement location="lib/hamcrest-core-1.3.jar" /> 
+	<pathelement location="${build.dir}" /> 
+</path> 
+
+<!-- Deletes the existing build, docs and dist directory--> 
+<target name="clean"> <delete dir="${build.dir}" /> 
+	<delete dir="${test.report.dir}" /> 
+</target>
+
+
+<!-- Creates the build, docs and dist directory--> 
+<target name="makedir"> 
+	<mkdir dir="${build.dir}" /> 
+	<mkdir dir="${build.test.dir}" /> 
+	<mkdir dir="${test.report.dir}" /> 
+</target> 
+
+<!-- Compiles the java code (including the usage of library for JUnit -->
+<target name="compile" depends="clean, makedir">
+    <mkdir dir="${src.dir}"/>
+    <javac srcdir="${src.dir}" destdir="${build.dir}">
+    	<classpath refid="junit.class.path" />
+    </javac>
+    <javac srcdir="${test.dir}" destdir="${build.test.dir}">
+    	<classpath refid="junit.class.path" />
+    </javac>
+</target>
+
+
+<!-- Run the JUnit Tests --> 
+<!-- Output is XML, could also be plain--> 
+<target name="junit" depends="compile"> 
+	<junit printsummary="on" fork="true" haltonfailure="yes"> 
+		<classpath refid="junit.class.path" /> 
+		<classpath> 
+			<pathelement location="${build.test.dir}"/> 
+		</classpath> 
+	<!-- <formatter type="xml" />  -->
+	<formatter type="brief" usefile="false" />
+	<batchtest todir="${test.report.dir}"> 
+		<fileset dir="${test.dir}"> 
+			<include name="**/*Test.java" /> 
+		</fileset> </batchtest> 
+	</junit> 
+</target> 
+
+<target name="javadoc" depends="compile">
+	<javadoc
+		sourcepath="src"
+		destdir="docs"
+		author="true"
+		version="true"
+		use="true"
+		windowtitle="NumberPrettifier">
+	</javadoc>          
+</target>
+
+<target name="main" depends="compile, junit, javadoc"> 
+	<description>Main target</description> 
+</target>
+
 </project>

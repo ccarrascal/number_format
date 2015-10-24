@@ -7,7 +7,9 @@ import java.util.Locale;
 import java.text.DecimalFormatSymbols;
 
 /**
-* Prettifier class
+* NumberPrettifier class
+*
+* @author Carlos Carrascal Sanchez
 *
 */
 public class NumberPrettifier {
@@ -15,86 +17,121 @@ public class NumberPrettifier {
 	private Hashtable<String, Double> supportedFormats;
 	private Locale locale;
 
+	/**
+	* Empty constructor.
+	*
+	* Defaults to US locale, using "." for decimals
+	*/
 	public NumberPrettifier() {
 		initializeFormats();
 		locale = Locale.US;
 	}
 
+	/**
+	* Constructor using Locale class.
+	*
+	* Using this constructor the character used for decimal separator
+	* will be displayed according the Locale used.
+	*
+	* Example: <pre>NumberPrettifier prettifier = new NumberPrettifier(new Locale("es", "ES"));</pre>
+	* 
+	* @param locale Locale class to user for output format
+	* @see java.util.Locale
+	*/
 	public NumberPrettifier(Locale locale) {
 		initializeFormats();
 		this.locale = locale;
 	}
 
 
+	/**
+	* Initialize the internal Hastable with supported formats.
+	*
+	* To include a new format, add a new line like this:
+	* 
+	* <pre>supportedFormats.put("X", XXXXXd);</pre>
+	*
+	* These lines has to be ordered from bigger to smaller numbers.
+	*/
 	private void initializeFormats() {
+
 		supportedFormats = new Hashtable <String, Double>();
 		supportedFormats.put("T", 1000000000000d);
 		supportedFormats.put("B", 1000000000d);
 		supportedFormats.put("M", 1000000d);
 	}
 
+
+	/**
+	* Static main method to te able to excute this class from the command line.
+	*
+	* This method expects a number parameter as input for the format() function.
+	* 
+	* Example (run from the base dir, where the file build.xml is located):
+	* 
+	* <pre>java -cp bin org.crossover.util.Prettifier 250000</pre>
+	*
+	*/
 	public static void main(String[] args) {
 
-		int iValue = 0;
 		NumberPrettifier prettifier = new NumberPrettifier();
 
 		if (args.length > 0) {
 			System.out.println(prettifier.format(args[0]));
 		} else {
-			System.out.println("A number must be passed as a paramter.");
-
+			System.out.println("A number must be passed as a parameter.");
 		}
-
 
 		return;
 	}
 
 
-	public String format(String input) {
-
-		return this.format(new Double(input));
-	}
-
-	public String format(int input) {
-
-		return this.format(new Double(input));
-	}
-
-	public String format(Float input) {
-
-		return this.format(new Float(input));
-	}
-
-
-
-
+	/**
+	* Format a number into a truncated, "prettified" string version.
+	*
+	* Negative numbers are allowed and formated in the same way.
+	*
+	* @param input Number to be formatted.
+	* @return The formatted number in String.
+	*/
 	public String format(Double input) {
 
-		String result = String.valueOf(input.intValue());
+		String result;
+		try {
 
-		Enumeration<String> keys = supportedFormats.keys();
-		while (keys.hasMoreElements()) {
-			String letter = keys.nextElement();
-			Double ceiling = supportedFormats.get(letter);
+			result = String.valueOf(input.intValue());
 
-			if ( input >= ceiling || input <= (-1 * ceiling) ) {
-				result = setFormat(input, letter, ceiling);
+			// Get list of supported formats from the hashtable
+			Enumeration<String> keys = supportedFormats.keys();
+			while (keys.hasMoreElements()) {
+				String letter = keys.nextElement();
+				Double ceiling = supportedFormats.get(letter);
+
+				// Check the number against the ceiling value and the negative one
+				if ( input >= ceiling || input <= (-1 * ceiling) ) {
+					result = setFormat(input, letter, ceiling);
+				}
+
 			}
-
+		} catch (Exception e) {
+			// In case of error, an empty string is returned
+			result = new String();
 		}
 
 		return result;
 	}
 
+
+
 	private String setFormat(Double input, String letter, Double ceiling) {
 
 		input = input / ceiling;
 
-		return finalFormat(input, letter);
+		return setFinalFormat(input, letter);
 	}
 
 
-	private String finalFormat(Double number, String letter) {
+	private String setFinalFormat(Double number, String letter) {
 	
 		String result = new String();
 
@@ -109,6 +146,33 @@ public class NumberPrettifier {
 
 		return result;
 	}
+
+
+	public String format(String input) {
+
+		String result;
+		try {
+			result = this.format(new Double(input));	
+		} catch (Exception e) {
+			result = new String();
+		}
+		
+		return result;
+	}
+
+	public String format(int input) {
+
+		String result;
+		try {
+			result = this.format(new Double(input));	
+		} catch (Exception e) {
+			result = new String();
+		}
+		
+		return result;
+	}
+
+
 }
 
 
