@@ -1,0 +1,12 @@
+<project default="compile">
+    <target name="compile">
+        <mkdir dir="bin"/>
+        <javac srcdir="src" destdir="bin" />
+        <javac srcdir="test" destdir="bin">
+			<classpath>
+		        <pathelement path="lib/junit-4.12.jar"/>
+		        <pathelement path="lib/hamcrest-core-1.3.jar"/>
+		    </classpath>
+        </javac>
+    </target>
+</project>
