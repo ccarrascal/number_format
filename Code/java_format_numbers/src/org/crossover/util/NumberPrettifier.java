@@ -9,6 +9,23 @@ import java.text.DecimalFormatSymbols;
 /**
 * NumberPrettifier class
 *
+* Utility class that accepts a numeric type and returns a truncated, "prettified" string version. 
+*
+* The prettified version will include one number after the decimal when the truncated number is not an integer. 
+* Prettifies numbers greater than 6 digits and support millions, billions and trillions. 
+*
+* Short scale numbers are used to output the prettified number.
+*
+* Examples:
+* 
+*		input: 1000000 output: 1M
+*
+*		input: 2500000.34 output: 2.5M
+*
+*		input: 532 output: 532
+*
+*		input: 1123456789 output: 1.1B*
+*
 * @author Carlos Carrascal Sanchez
 *
 */
@@ -62,28 +79,6 @@ public class NumberPrettifier {
 	}
 
 
-	/**
-	* Static main method to te able to excute this class from the command line.
-	*
-	* This method expects a number parameter as input for the format() function.
-	* 
-	* Example (run from the base dir, where the file build.xml is located):
-	* 
-	* <pre>java -cp bin org.crossover.util.Prettifier 250000</pre>
-	*
-	*/
-	public static void main(String[] args) {
-
-		NumberPrettifier prettifier = new NumberPrettifier();
-
-		if (args.length > 0) {
-			System.out.println(prettifier.format(args[0]));
-		} else {
-			System.out.println("A number must be passed as a parameter.");
-		}
-
-		return;
-	}
 
 
 	/**
@@ -122,32 +117,49 @@ public class NumberPrettifier {
 	}
 
 
-
+	/**
+	* Private funtion to do the actual formatting.
+	*
+	* This function truncates the number as determined by <pre>ceiling</pre> parameter,
+	* and uses a <pre>DecimalFormat</p> class to format the number if the resulting number
+	* is not an integer, to represent it only with one decimal.
+	*
+	* The decimal separator will be "." by default, unless a specific Locale was used in the constructor.
+	*
+	* @param input Input number to format
+	* @param letter Letter code to use in the format
+	* @param ceiling Format range to apply
+	* @see DecimalFormat
+	*/
 	private String setFormat(Double input, String letter, Double ceiling) {
 
-		input = input / ceiling;
-
-		return setFinalFormat(input, letter);
-	}
-
-
-	private String setFinalFormat(Double number, String letter) {
-	
 		String result = new String();
 
-		if ( number % 1 == 0 ) 
-			result = String.valueOf(number.intValue());
+		// Truncate the number to the desired range, based on ceiling
+		input = input / ceiling;
+
+		if ( input % 1 == 0 ) 
+			result = String.valueOf(input.intValue());
 		else {
+			// For non integers, apply a custom format
 			DecimalFormat df = new DecimalFormat("#.#", new DecimalFormatSymbols(this.locale));
-			result = df.format(number);
+			result = df.format(input);
 		}
 
 		result = result + letter;
 
 		return result;
+
 	}
 
 
+	/**
+	* Helper function to format() using a String.
+	*
+	* @param input Number to be formatted.
+	* @return The formatted number in String.
+	* @see #format(Double input)
+	*/
 	public String format(String input) {
 
 		String result;
@@ -160,6 +172,14 @@ public class NumberPrettifier {
 		return result;
 	}
 
+
+	/**
+	* Helper function to format() using a integer value.
+	*
+	* @param input Number to be formatted.
+	* @return The formatted number in String.
+	* @see #format(Double input)
+	*/
 	public String format(int input) {
 
 		String result;
@@ -172,6 +192,49 @@ public class NumberPrettifier {
 		return result;
 	}
 
+
+	/**
+	* Static method to format a number.
+	* 
+	* This method does the same as format(Double) but can be called statically.
+	*
+	* Example:
+	*
+	* <pre>String number = NumberPrettifier.formatValue(1000D);</pre>
+	*
+	* @param input Number to be formatted.
+	* @return The formatted number in String.
+	* @see #format(Double input)
+	*/
+	public static String formatValue(Double input) {
+		NumberPrettifier prettifier = new NumberPrettifier();
+
+		return prettifier.format(input);
+	}
+
+
+	/**
+	* Static main method to te able to excute this class from the command line.
+	*
+	* This method expects a number parameter as input for the format() function.
+	* 
+	* Example (run from the base dir, where the file build.xml is located):
+	* 
+	* <pre>java -cp bin org.crossover.util.Prettifier 250000</pre>
+	*
+	*/
+	public static void main(String[] args) {
+
+		NumberPrettifier prettifier = new NumberPrettifier();
+
+		if (args.length > 0) {
+			System.out.println(prettifier.format(args[0]));
+		} else {
+			System.out.println("A number must be passed as a parameter.");
+		}
+
+		return;
+	}
 
 }
 
