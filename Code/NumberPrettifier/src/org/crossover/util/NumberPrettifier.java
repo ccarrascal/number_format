@@ -257,6 +257,23 @@ public class NumberPrettifier {
 	}
 
 
+	/**
+	* Public setter for locale
+	* 
+	* @param locale Locale to be used
+	*/
+	public void setLocale(Locale locale) {
+		this.locale = locale;
+	}
+
+	/**
+	* Public getter for locale
+	*
+	* @return Current locale
+	*/
+	public Locale getLocale() {
+		return this.locale;
+	}
 
 }
 
