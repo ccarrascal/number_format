@@ -90,7 +90,9 @@
 
 			java -cp bin ExampleRunner <number>
 
+		There is also a small bash script that can be used to run the project:
 
+			sh ./run.sh
 
 
 
