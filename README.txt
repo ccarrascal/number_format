@@ -28,17 +28,17 @@
 
 	Windows Systems
 
-		Download and install Java JDK 7 (at least versión 7)
+		* Download and install Java JDK 7 (at least versión 7)
 
-		http://www.oracle.com/technetwork/es/java/javase/downloads/jdk7-downloads-1880260.html (Oracle version)
+			http://www.oracle.com/technetwork/es/java/javase/downloads/jdk7-downloads-1880260.html (Oracle version)
 
-		Download and install Apache Ant 
+		* Download and install Apache Ant 
 
-		http://ant.apache.org/manual/install.html
+			http://ant.apache.org/manual/install.html
 
-		Download and install ConEmu  (Optional but recommended)
+		* Download and install ConEmu  (Optional but recommended)
 
-		http://sourceforge.net/projects/conemu/
+			http://sourceforge.net/projects/conemu/
 
 
 	GNU / Linux system (Debian based), as root
