@@ -17,6 +17,7 @@
 <!-- Deletes the existing build, docs and dist directory--> 
 <target name="clean"> 
 	<delete dir="${build.dir}" /> 
+	<delete dir="${docs.dir}" /> 
 	<delete dir="${test.report.dir}" /> 
 </target>
 
