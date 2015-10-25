@@ -27,7 +27,7 @@ import java.text.DecimalFormatSymbols;
 *		input: 1123456789 output: 1.1B*
 *</pre>
 *
-* @author Carlos Carrascal Sanchez
+* @author Carlos Carrascal Sanchez <carlos.carrascal@gmail.com>
 *
 */
 public class NumberPrettifier {
@@ -144,6 +144,10 @@ public class NumberPrettifier {
 		else {
 			// For non integers, apply a custom format
 			DecimalFormat df = new DecimalFormat("#.#", new DecimalFormatSymbols(this.locale));
+
+			// Rounding mode can be adjusted here. 
+			//df.setRoundingMode(java.math.RoundingMode.UP);
+
 			result = df.format(input);
 		}
 
@@ -165,7 +169,7 @@ public class NumberPrettifier {
 
 		String result;
 		try {
-			result = this.format(new Double(input));	
+			result = this.format(Double.parseDouble(input));
 		} catch (Exception e) {
 			result = new String();
 		}
@@ -201,41 +205,57 @@ public class NumberPrettifier {
 	*
 	* Example:
 	*
-	* <pre>String number = NumberPrettifier.formatValue(1000D);</pre>
+	* <pre>String number = NumberPrettifier.formatDouble(1000D);</pre>
 	*
 	* @param input Number to be formatted.
 	* @return The formatted number in String.
 	* @see #format(Double input)
 	*/
-	public static String formatValue(Double input) {
+	public static String formatDouble(Double input) {
 		NumberPrettifier prettifier = new NumberPrettifier();
 
 		return prettifier.format(input);
 	}
 
-
 	/**
-	* Static main method to te able to excute this class from the command line.
-	*
-	* This method expects a number parameter as input for the format() function.
+	* Static method to format a number.
 	* 
-	* Example (run from the base dir, where the file build.xml is located):
-	* 
-	* <pre>java -cp bin org.crossover.util.Prettifier 250000</pre>
+	* This method does the same as format(Double) but can be called statically.
 	*
+	* Example:
+	*
+	* <pre>String number = NumberPrettifier.formatFloat(1000D);</pre>
+	*
+	* @param input Number to be formatted.
+	* @return The formatted number in String.
+	* @see #format(Double input)
 	*/
-	public static void main(String[] args) {
-
+	public static String formatFloat(Float input) {
 		NumberPrettifier prettifier = new NumberPrettifier();
 
-		if (args.length > 0) {
-			System.out.println(prettifier.format(args[0]));
-		} else {
-			System.out.println("A number must be passed as a parameter.");
-		}
-
-		return;
+		return prettifier.format(input.doubleValue());
 	}
+
+	/**
+	* Static method to format a number.
+	* 
+	* This method does the same as format(Double) but can be called statically.
+	*
+	* Example:
+	*
+	* <pre>String number = NumberPrettifier.formatInt(1000D);</pre>
+	*
+	* @param input Number to be formatted.
+	* @return The formatted number in String.
+	* @see #format(Double input)
+	*/
+	public static String formatInt(int input) {
+		NumberPrettifier prettifier = new NumberPrettifier();
+
+		return prettifier.format(new Double(input));
+	}
+
+
 
 }
 
