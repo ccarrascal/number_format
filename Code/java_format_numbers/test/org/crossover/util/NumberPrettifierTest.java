@@ -26,6 +26,7 @@ public class NumberPrettifierTest {
 	    NumberPrettifier tester = new NumberPrettifier();
 
 	    // assert statements
+	    assertEquals("input: 0 should output: 0", "0", tester.format(0));
 	    assertEquals("input: 1000000 should output: 1M", "1M", tester.format(1000000));
 	    assertEquals("input: 2500000.34 should output: 2.5M", "2.5M", tester.format(2500000.34));
 	    assertEquals("input: 532 should output: 532", "532", tester.format(532));
@@ -90,7 +91,20 @@ public class NumberPrettifierTest {
 
 	}
 
+	/**
+	* Check output values for wrong input values.
+	* Expected results are blank strings.
+	* No errors should be produced.
+	*/
+	@Test
+	public void wrongValuesShouldReturnAsExpected() {
 
+	    NumberPrettifier tester = new NumberPrettifier();
+
+	    // assert statements
+	    assertEquals("input: ZADSADSAD should output: ", "", tester.format("ZADSADSAD"));
+
+	}
 }
 
 
