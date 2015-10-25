@@ -76,20 +76,50 @@ You should deliver the implemented source code including any dependencies. For t
 
 
 
+	Extract ZIP in desired folder. ZIP base folder will be refered to as $BASE
+	Use a terminal and navigate to the $BASE folder using cd 
+
+		cd $BASE
+
 
 # How to configure
 
-	Extract ZIP in desired folder. ZIP base folder will be refered to as $BASE
+	
 
-Compile:
+	Compile:
 
-	Use Ant to compile sources, run JUnit tests, and create Javadoc entries.
+		Use Ant to compile sources, run JUnit tests, and create Javadoc entries.
+		Go to the base code folder, where the file build.xml is located.
+
+			cd Code/NumberPrettifier
+			ant
+
+		The Ant build file will do:
+			* Clean binaries
+			* Compile binaries
+			* Execute JUnit tests
+			* Generate Javadoc docuementation
+
+		If everything its correct you should see some information and the message:
+
+			BUILD SUCCESSFUL
+
+		Also, an alternative method without Ant is provided to compile:
+
+			sh ./compile.sh
+
+		NOTE: This method will not run JUnit tests
+
+	Run:
+		
+		A simple ExampleRunner class has been included. This class has a main method
+		that can be called from command line, and will show some use examples.
+		A parameter can be passed from the command line to prettify it.
 
 
+			java -cp bin ExampleRunner <number>
 
-Run:
 
-java -cp bin org.crossover.util.NumberPrettifier 10000000
 
 
 
@@ -98,8 +128,19 @@ java -cp bin org.crossover.util.NumberPrettifier 10000000
 
 Development and testing where made using a Debian GNU / Linux machine.
 Instalation and running instructions are provided for Windows systems, 
-but is strongly recomended to use a Debian box or derivatives.
+but is recomended to use a Debian box or derivatives.
+
+The code is using standar rounding mode HALF_EVEN to present the results.
+
+
 
 
 # Issues
+
+Regional settings in the system can affect the results, because of the use
+of different characters to represent the decimal separator.
+
+This has been taken into account forcing the use of a US locale, and allowing
+the use of a custom locale by a dedicated Class contructor.
+
 
