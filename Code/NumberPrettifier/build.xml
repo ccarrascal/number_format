@@ -32,10 +32,10 @@
 <!-- Compiles the java code (including the usage of library for JUnit -->
 <target name="compile" depends="clean, makedir">
     <mkdir dir="${src.dir}"/>
-    <javac srcdir="${src.dir}" destdir="${build.dir}">
+    <javac includeantruntime="false" srcdir="${src.dir}" destdir="${build.dir}">
     	<classpath refid="junit.class.path" />
     </javac>
-    <javac srcdir="${test.dir}" destdir="${build.test.dir}">
+    <javac includeantruntime="false" srcdir="${test.dir}" destdir="${build.test.dir}">
     	<classpath refid="junit.class.path" />
     </javac>
 </target>
@@ -49,12 +49,13 @@
 		<classpath> 
 			<pathelement location="${build.test.dir}"/> 
 		</classpath> 
-	<!-- <formatter type="xml" />  -->
-	<formatter type="brief" usefile="false" />
-	<batchtest todir="${test.report.dir}"> 
-		<fileset dir="${test.dir}"> 
-			<include name="**/*Test.java" /> 
-		</fileset> </batchtest> 
+		<!-- <formatter type="xml" />  -->
+		<formatter type="brief" usefile="false" />
+		<batchtest todir="${test.report.dir}"> 
+			<fileset dir="${test.dir}"> 
+				<include name="**/*Test.java" /> 
+			</fileset> 
+		</batchtest> 
 	</junit> 
 </target> 
 

@@ -10,24 +10,25 @@ import java.text.DecimalFormatSymbols;
 * NumberPrettifier class
 *
 * Utility class that accepts a numeric type and returns a truncated, "prettified" string version. 
-*
+* <p>
 * The prettified version will include one number after the decimal when the truncated number is not an integer. 
 * Prettifies numbers greater than 6 digits and support millions, billions and trillions. 
-*
+* <p>
 * Short scale numbers are used to output the prettified number.
-*
+* <p>
 * Examples:
+* <p>
 * <pre>
-*		input: 1000000 output: 1M
+*	input: 1000000 output: 1M
 *
-*		input: 2500000.34 output: 2.5M
+*	input: 2500000.34 output: 2.5M
 *
-*		input: 532 output: 532
+*	input: 532 output: 532
 *
-*		input: 1123456789 output: 1.1B*
+*	input: 1123456789 output: 1.1B
 *</pre>
 *
-* @author Carlos Carrascal Sanchez <carlos.carrascal@gmail.com>
+* @author Carlos Carrascal Sanchez, carlos.carrascal@gmail.com
 *
 */
 public class NumberPrettifier {
