@@ -17,7 +17,7 @@ import java.text.DecimalFormatSymbols;
 * Short scale numbers are used to output the prettified number.
 *
 * Examples:
-* 
+* <pre>
 *		input: 1000000 output: 1M
 *
 *		input: 2500000.34 output: 2.5M
@@ -25,6 +25,7 @@ import java.text.DecimalFormatSymbols;
 *		input: 532 output: 532
 *
 *		input: 1123456789 output: 1.1B*
+*</pre>
 *
 * @author Carlos Carrascal Sanchez
 *
