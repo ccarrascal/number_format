@@ -1,8 +1,12 @@
 package org.crossover.util;
 
 import java.text.DecimalFormat;
-import java.util.Hashtable;
-import java.util.Enumeration;
+import java.util.Map;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Iterator;
+
 import java.util.Locale;
 import java.text.DecimalFormatSymbols;
 
@@ -33,7 +37,7 @@ import java.text.DecimalFormatSymbols;
 */
 public class NumberPrettifier {
 
-	private Hashtable<String, Double> supportedFormats;
+	private Map<String, Double> supportedFormats;
 	private Locale locale;
 
 	/**
@@ -64,7 +68,7 @@ public class NumberPrettifier {
 
 
 	/**
-	* Initialize the internal Hastable with supported formats.
+	* Initialize the internal LinkedHashMap with supported formats.
 	*
 	* To include a new format, add a new line like this:
 	* 
@@ -74,7 +78,8 @@ public class NumberPrettifier {
 	*/
 	private void initializeFormats() {
 
-		supportedFormats = new Hashtable <String, Double>();
+		supportedFormats = Collections.synchronizedMap( new LinkedHashMap<String, Double>() );
+
 		supportedFormats.put("T", 1000000000000d);
 		supportedFormats.put("B", 1000000000d);
 		supportedFormats.put("M", 1000000d);
@@ -99,17 +104,20 @@ public class NumberPrettifier {
 			result = String.valueOf(input.intValue());
 
 			// Get list of supported formats from the hashtable
-			Enumeration<String> keys = supportedFormats.keys();
-			while (keys.hasMoreElements()) {
-				String letter = keys.nextElement();
+			Iterator i = supportedFormats.keySet().iterator();
+
+			while (i.hasNext()) {
+				String letter = (String) i.next();
 				Double ceiling = supportedFormats.get(letter);
 
 				// Check the number against the ceiling value and the negative one
 				if ( input >= ceiling || input <= (-1 * ceiling) ) {
 					result = setFormat(input, letter, ceiling);
+					break;
 				}
 
 			}
+
 		} catch (Exception e) {
 			// In case of error, an empty string is returned
 			result = new String();
