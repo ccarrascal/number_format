@@ -1,14 +1,12 @@
 package org.crossover.util;
 
 import java.text.DecimalFormat;
-import java.util.Map;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Iterator;
-
-import java.util.Locale;
 import java.text.DecimalFormatSymbols;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.Map;
 
 /**
 * NumberPrettifier class
@@ -104,7 +102,7 @@ public class NumberPrettifier {
 			result = String.valueOf(input.intValue());
 
 			// Get list of supported formats from the hashtable
-			Iterator i = supportedFormats.keySet().iterator();
+			Iterator<String> i = supportedFormats.keySet().iterator();
 
 			while (i.hasNext()) {
 				String letter = (String) i.next();

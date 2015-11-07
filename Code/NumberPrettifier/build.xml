@@ -1,10 +1,10 @@
 <project default="main">
 
-<property name="src.dir" location="src" /> 
-<property name="test.dir" location="test" /> 
+<property name="src.dir" location="src/main/java" /> 
+<property name="test.dir" location="src/test/java" /> 
 <property name="build.dir" location="bin" /> 
 <property name="docs.dir" location="docs" /> 
-<property name="build.test.dir" location="bin/tests" /> 
+<property name="build.test.dir" location="bin/test" /> 
 <property name="test.report.dir" location="report" /> 
 
 <!-- Define the classpath which includes the junit.jar and the classes after compiling--> 
