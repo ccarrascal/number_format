@@ -2,7 +2,7 @@
 
 <property name="src.dir" location="src/main/java" /> 
 <property name="test.dir" location="src/test/java" /> 
-<property name="build.dir" location="bin" /> 
+<property name="build.dir" location="bin/main" /> 
 <property name="docs.dir" location="docs" /> 
 <property name="build.test.dir" location="bin/test" /> 
 <property name="test.report.dir" location="report" /> 
